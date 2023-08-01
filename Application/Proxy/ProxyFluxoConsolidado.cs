@@ -10,8 +10,7 @@ namespace Application.Proxy
     { 
     }
     public async Task<ConsolidadoResponse> GetExtratoFluxoCaixaAsync(string recurso, string parametros)
-    {
-    
+    {    
       var resource = $"{recurso}/{parametros}";
       var result = await this.GetAsync<ConsolidadoResponse>(resource);
       return result;
