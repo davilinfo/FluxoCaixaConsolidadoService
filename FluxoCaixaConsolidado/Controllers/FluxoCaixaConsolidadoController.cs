@@ -32,7 +32,7 @@ namespace FluxoCaixaConsolidado.Controllers
       {
         if (ModelState.IsValid)
         {
-          var result = _fluxoConsolidadoApplicationService.GetConsolidado(request);
+          var result = await _fluxoConsolidadoApplicationService.GetConsolidado(request);
           return Ok(result);
         }
         foreach (var item in ModelState.Values)

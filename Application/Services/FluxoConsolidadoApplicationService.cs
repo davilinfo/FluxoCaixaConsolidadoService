@@ -16,7 +16,7 @@ namespace Application.Services
     {
       try
       {
-        var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("", $"FluxoCaixa/GetExtrato?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}");
+        var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("FluxoCaixa", $"GetExtrato?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}");
 
         return result;
       }
