@@ -6,6 +6,7 @@ using Application.Model.Response;
 using Microsoft.Extensions.Logging;
 using Domain.Contract;
 using Domain.EF;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Services
 {
@@ -13,14 +14,19 @@ namespace Application.Services
   {
     ILogger<ConsolidadoListenerQueueApplicationService> _logger;
     IRepositoryExtractConsolidated _repositoryExtractConsolidated;
-    public ConsolidadoListenerQueueApplicationService(ILogger<ConsolidadoListenerQueueApplicationService> logger, IRepositoryExtractConsolidated repositoryExtractConsolidated)
+    IConfiguration _config;
+    public ConsolidadoListenerQueueApplicationService(ILogger<ConsolidadoListenerQueueApplicationService> logger, IConfiguration configuration, IRepositoryExtractConsolidated repositoryExtractConsolidated)
     {
       _logger = logger;
       _repositoryExtractConsolidated = repositoryExtractConsolidated;
+      _config = configuration;
     }
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+      if (bool.Parse(_config.GetSection("AMQP:Activated").Value) == true)
+      {
         await ConsolidadoListener();
+      }
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
@@ -30,7 +36,9 @@ namespace Application.Services
 
     private async Task ConsolidadoListener()
     {
-      var factory = new ConnectionFactory() { HostName = "localhost" };
+      var amqpPort = _config.GetSection("AMQP:Port").Value != null ? int.Parse(_config.GetSection("AMQP:Port").Value) : 5672;
+      var factory = new ConnectionFactory() { HostName = "localhost", UserName = "guest", Password = "guest", Port = amqpPort };
+      
       using (var connection = factory.CreateConnection())
       using (var channel = connection.CreateModel())
       {        
