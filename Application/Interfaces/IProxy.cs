@@ -21,9 +21,15 @@ namespace Application.Interfaces
     {      
       _httpClient.BaseAddress = new System.Uri(_url);      
       var result = await _httpClient.GetAsync($"{recurso}");
-      var deserialized = await result.Content.ReadFromJsonAsync<T>();
-
-      return deserialized;
+      if (result.StatusCode == System.Net.HttpStatusCode.OK)
+      {
+        var deserialized = await result.Content.ReadFromJsonAsync<T>();
+        return deserialized;
+      }
+      if (result.StatusCode == System.Net.HttpStatusCode.NotFound) {
+        throw new Exception("Conta sem movimentação");
+      }
+      throw new Exception("Não foi possível retornar consolidado");
     }
 
     public T Get<T>(string recurso)
@@ -32,10 +38,18 @@ namespace Application.Interfaces
       var result = _httpClient.GetAsync($"{recurso}");
       result.RunSynchronously();
 
-      var deserialized = result.Result.Content.ReadFromJsonAsync<T>();
-      deserialized.RunSynchronously();
+      if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+      {
+        var deserialized = result.Result.Content.ReadFromJsonAsync<T>();
+        deserialized.RunSynchronously();
 
-      return deserialized.Result;
+        return deserialized.Result;
+      }
+      if (result.Result.StatusCode == System.Net.HttpStatusCode.NotFound)
+      {
+        throw new Exception("Conta sem movimentação");
+      }
+      throw new Exception("Não foi possível retornar consolidado");      
     }
   }
 }
