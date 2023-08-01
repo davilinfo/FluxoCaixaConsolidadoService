@@ -23,4 +23,4 @@ Para publicar versão da aplicação faça na pasta da solução: Dotnet publish
 
 Gerar imagem em docker: docker build -f "D:\RestfulApi\FluxoCaixaConsolidado\FluxoCaixaConsolidado\Dockerfile" --force-rm -t consolidado "D:\RestfulApi\FluxoCaixaConsolidado"
 
-Criar container a partir de imagem: docker run -dt -e "ASPNETCORE_ENVIRONMENT=Development" -e "ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true" -p50155:80 --name consolidado_development consolidado:latest --network host
+Criar container a partir de imagem: docker run -dt -e "ASPNETCORE_ENVIRONMENT=Development" -e "ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true" -p47155:80 --name consolidado_development consolidado:latest --network host
