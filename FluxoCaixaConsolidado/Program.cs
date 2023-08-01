@@ -5,6 +5,7 @@ using Domain.Contract;
 using Microsoft.OpenApi.Models;
 using Persistence.Context;
 using Persistence.Repository;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,9 @@ builder.Services.AddSwaggerGen(gen =>
       Name = "Davi Lima Alves",
       Url = new Uri("https://linkedin.com/in/davilalves")
     }
-  });    
+  });
+  var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+  gen.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
 builder.Services.AddDbContext<ConsolidadoContext>();
 

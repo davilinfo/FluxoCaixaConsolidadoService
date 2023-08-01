@@ -18,6 +18,9 @@ namespace Application.Proxy
         return result;
       }catch(Exception e)
       {
+        if (e.Message.Contains("status code:NotFound")){
+          return new ConsolidadoResponse { };
+        }
         throw e;
       }
     }

@@ -52,6 +52,10 @@ namespace FluxoCaixaConsolidado.Controllers
         if (ModelState.IsValid)
         {
           var result = await _fluxoConsolidadoApplicationService.GetConsolidado(request);
+          if (result.IdAccount == null)
+          {
+            return NotFound("Conta ainda sem movimentação");
+          }
           return Ok(result);
         }
         foreach (var item in ModelState.Values)

@@ -27,7 +27,7 @@ namespace Application.Interfaces
         return deserialized;
       }
       if (result.StatusCode == System.Net.HttpStatusCode.NotFound) {
-        throw new Exception("Conta sem movimentação");
+        throw new Exception($"Conta sem movimentação status code:{result.StatusCode}");
       }
       throw new Exception("Não foi possível retornar consolidado");
     }
@@ -47,7 +47,7 @@ namespace Application.Interfaces
       }
       if (result.Result.StatusCode == System.Net.HttpStatusCode.NotFound)
       {
-        throw new Exception("Conta sem movimentação");
+        throw new Exception($"Conta sem movimentação status code:{result.Result.StatusCode}");
       }
       throw new Exception("Não foi possível retornar consolidado");      
     }
