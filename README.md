@@ -17,7 +17,11 @@ Microserviço: independente para time, permite escalar horizontalmente e vertica
 
 ##Unit Tests: Utilizado Moq e VisualStudioUnitTests. disponível em Carrefour fluxo caixa
 
-##SQL Server 2016 gerado a partir de migrations ##IIS padrão de uso ##Docker: deve ser realizado publish, gerar imagem e criar container, incluir atributo para permitir consulta a serviços externos --network host
+##SQL Server 2016 gerado a partir de migrations ##IIS padrão de uso 
+
+##Docker: deve ser realizado publish, gerar imagem e criar container, incluir atributo para permitir consulta a serviços externos --network host,
+alterar connectionstring para host.docker.interval,1433
+alterar AMQP hostname para host.docker.interval
 
 Para publicar versão da aplicação faça na pasta da solução: Dotnet publish -c Debug
 
