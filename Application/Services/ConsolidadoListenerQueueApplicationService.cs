@@ -37,7 +37,7 @@ namespace Application.Services
     private async Task ConsolidadoListener()
     {
       var amqpPort = _config.GetSection("AMQP:Port").Value != null ? int.Parse(_config.GetSection("AMQP:Port").Value) : 5672;
-      var factory = new ConnectionFactory() { HostName = "localhost", UserName = "guest", Password = "guest", Port = amqpPort };
+      var factory = new ConnectionFactory() { HostName = _config.GetSection("AMQP:Hostname").Value, UserName = "guest", Password = "guest", Port = amqpPort };
       
       using (var connection = factory.CreateConnection())
       using (var channel = connection.CreateModel())
