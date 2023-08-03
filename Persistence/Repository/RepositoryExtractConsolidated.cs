@@ -46,9 +46,15 @@ namespace Persistence.Repository
 
     public async Task<int> Update(ExtractConsolidated entidade)
     {
-      _context.Extracts.Update(entidade);
-
-      return await _context.SaveChangesAsync();
+      var entity = _context.Extracts.Find(entidade.Id);
+      if (entity != null)
+      {
+        entity.Date = entidade.Date;
+        entity.Extract = entidade.Extract;
+        _context.Extracts.Update(entity);
+        return await _context.SaveChangesAsync();
+      }
+      return 0;
     }
   }
 }

@@ -26,7 +26,7 @@ namespace Application.Services
       if (bool.Parse(_config.GetSection("AMQP:Activated").Value) == true)
       {
         await ConsolidadoListener();
-      }
+      }      
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
@@ -38,49 +38,49 @@ namespace Application.Services
     {
       var amqpPort = _config.GetSection("AMQP:Port").Value != null ? int.Parse(_config.GetSection("AMQP:Port").Value) : 5672;
       var factory = new ConnectionFactory() { HostName = _config.GetSection("AMQP:Hostname").Value, UserName = "guest", Password = "guest", Port = amqpPort };
-      
-      using (var connection = factory.CreateConnection())
-      using (var channel = connection.CreateModel())
-      {        
-        channel.QueueDeclare(queue: "queueFluxo",
-                          durable: false,
-                          exclusive: false,
-                          autoDelete: false,
-                          arguments: null);
 
-        var consumerFluxoCaixaConsolidadoDiario = new EventingBasicConsumer(channel);
-        consumerFluxoCaixaConsolidadoDiario.Received += async (model, ea) =>
-        {          
-          var body = ea.Body.ToArray();
-          var message = Encoding.UTF8.GetString(body);
-          _logger.LogInformation($"fluxo consolidado recebido {message}");
+      var connection = factory.CreateConnection();
+      var channel = connection.CreateModel();
+              
+      channel.QueueDeclare(queue: "queueFluxo",
+                        durable: false,
+                        exclusive: false,
+                        autoDelete: false,
+                        arguments: null);
 
-          var fluxoCaixaDiarioConsolidado = System.Text.Json.JsonSerializer.Deserialize<ConsolidadoResponse>(message);
-          var entity = new ExtractConsolidated {
-            AccountId = fluxoCaixaDiarioConsolidado.IdAccount.Id,
-            Date = fluxoCaixaDiarioConsolidado.Created,
-            Extract = message
-          };
+      var consumerFluxoCaixaConsolidadoDiario = new EventingBasicConsumer(channel);
+      consumerFluxoCaixaConsolidadoDiario.Received += async (model, ea) =>
+      {          
+        var body = ea.Body.ToArray();
+        var message = Encoding.UTF8.GetString(body);
+        _logger.LogInformation($"fluxo consolidado recebido {message}");
 
-          var extract = _repositoryExtractConsolidated.All().FirstOrDefault(e => e.AccountId == fluxoCaixaDiarioConsolidado.IdAccount.Id && e.Date.Date == fluxoCaixaDiarioConsolidado.Created.Date);
-          if (extract != null)
-          {
-            if (fluxoCaixaDiarioConsolidado.Created > extract.Date)
-            {
-              entity.Id = extract.Id;
-              await _repositoryExtractConsolidated.Update(entity);
-            }
-          }
-          else
-          {
-            await _repositoryExtractConsolidated.Add(entity);
-          }          
+        var fluxoCaixaDiarioConsolidado = System.Text.Json.JsonSerializer.Deserialize<ConsolidadoResponse>(message);
+        var entity = new ExtractConsolidated {
+          AccountId = fluxoCaixaDiarioConsolidado.IdAccount.Id,
+          Date = fluxoCaixaDiarioConsolidado.Created,
+          Extract = message
         };
 
-        channel.BasicConsume(queue: "queueFluxo",
-                              autoAck: true,
-                              consumer: consumerFluxoCaixaConsolidadoDiario);        
-      }
+        var extract = _repositoryExtractConsolidated.All().FirstOrDefault(e => e.AccountId == fluxoCaixaDiarioConsolidado.IdAccount.Id && e.Date.Date == fluxoCaixaDiarioConsolidado.Created.Date);
+        if (extract != null)
+        {
+          if (fluxoCaixaDiarioConsolidado.Created > extract.Date)
+          {
+            entity.Id = extract.Id;
+            await _repositoryExtractConsolidated.Update(entity);
+          }
+        }
+        else
+        {
+          await _repositoryExtractConsolidated.Add(entity);
+        }
+      };
+
+      channel.BasicConsume(queue: "queueFluxo",
+                            autoAck: true,
+                            consumer: consumerFluxoCaixaConsolidadoDiario);        
+      
     }
   }
 }
