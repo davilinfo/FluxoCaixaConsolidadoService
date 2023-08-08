@@ -17,7 +17,7 @@ Microserviço: independente para time, permite escalar horizontalmente e vertica
 
 ##Unit Tests: Utilizado Moq e VisualStudioUnitTests. disponível em Carrefour fluxo caixa
 
-##SQL Server 2016 gerado a partir de migrations 
+##SQL Server 2016 database criado a partir de migrations 
 
 ##IIS padrão de uso 
 
@@ -30,3 +30,5 @@ Para publicar versão da aplicação faça na pasta da solução: Dotnet publish
 Gerar imagem em docker: docker build -f "D:\RestfulApi\FluxoCaixaConsolidado\FluxoCaixaConsolidado\Dockerfile" --force-rm -t consolidado "D:\RestfulApi\FluxoCaixaConsolidado"
 
 Criar container a partir de imagem: docker run -dt -e "ASPNETCORE_ENVIRONMENT=Development" -e "ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true" -p47155:80 --name consolidado_development consolidado:latest --network host
+
+Fluxo: ![image](https://github.com/davilinfo/Minsait-FluxoCaixaConsolidadoService/assets/18128361/95261a95-1a3c-41d5-b9f4-cc60ee2eff26)
