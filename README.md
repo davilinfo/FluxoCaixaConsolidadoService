@@ -1,5 +1,5 @@
 # FluxoCaixaConsolidado
-Projeto desenvolvido com .NET 7.0 Instruções de como utilizar web api estão disponíveis em Swagger
+Projeto desenvolvido com .NET 7.0 Instruções de como utilizar web api estão disponíveis em Swagger. Se executar a partir de Visual Studio faça em modo administrador para carregar comentários em Swagger.
 
 **Desing Patterns SOLID Principles: baseado em interfaces para serviços e entidades
 
