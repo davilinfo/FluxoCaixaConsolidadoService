@@ -31,4 +31,5 @@ Gerar imagem em docker: docker build -f "D:\RestfulApi\FluxoCaixaConsolidado\Flu
 
 Criar container a partir de imagem: docker run -dt -e "ASPNETCORE_ENVIRONMENT=Development" -e "ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true" -p47155:80 --name consolidado_development consolidado:latest --network host
 
-Fluxo: ![image](https://github.com/davilinfo/Minsait-FluxoCaixaConsolidadoService/assets/18128361/95261a95-1a3c-41d5-b9f4-cc60ee2eff26)
+Fluxo: ![image](https://github.com/davilinfo/Minsait-FluxoCaixaConsolidadoService/assets/18128361/b469d3d5-9bb6-4b99-8346-4a1bcdf9c14e)
+
