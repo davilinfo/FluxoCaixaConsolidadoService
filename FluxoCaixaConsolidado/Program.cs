@@ -26,8 +26,8 @@ builder.Services.AddSwaggerGen(gen =>
   gen.SwaggerDoc("v1", new OpenApiInfo
   {
     Version = "v1",
-    Title = "Mansait - Consolidado Carrefour API",
-    Description = "Um Web API em ASP.NET Core Web API para geração consolidado de fluxo de caixa. É necessário você estar executando o RabbitMQ na porta padrão para retornar consolidado conta!",
+    Title = "Test - Consolidado Carrefour API",
+    Description = "Um Web API em ASP.NET Core Web API para geraï¿½ï¿½o consolidado de fluxo de caixa. ï¿½ necessï¿½rio vocï¿½ estar executando o RabbitMQ na porta padrï¿½o para retornar consolidado conta!",
     Contact = new OpenApiContact
     {
       Name = "Davi Lima Alves",
