@@ -17,7 +17,11 @@ Microserviço: independente para time, permite escalar horizontalmente e vertica
 
 ##Unit Tests: Utilizado Moq e VisualStudioUnitTests. disponível em Carrefour fluxo caixa
 
-##SQL Server 2016 database criado a partir de migrations 
+##SQL Server 2016 database criado a partir de migrations (Na pasta da solução executar os seguintes comandos)
+
+dotnet tool install --global dotnet-ef 
+
+dotnet ef database update 20230801051256_FluxoConsolidado --project Persistence -s FluxoCaixaConsolidado -c ConsolidadoContext
 
 ##IIS padrão de uso 
 
