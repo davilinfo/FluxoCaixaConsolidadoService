@@ -29,7 +29,7 @@ namespace Application.Services
         }
 
         var extract = _repositoryExtractConsolidated.All().OrderByDescending(c=>c.Date).FirstOrDefault(c => c.AccountId == Guid.Parse(request.AccountId) && c.Date.Date <= date);
-        if (extract != null) {
+        if (extract == null) {
           var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("FluxoCaixa", $"GetExtrato?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}", token);
 
           return result;
