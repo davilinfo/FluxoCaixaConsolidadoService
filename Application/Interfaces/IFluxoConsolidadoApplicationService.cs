@@ -5,6 +5,6 @@ namespace Application.Interfaces
 {
   public interface IFluxoConsolidadoApplicationService
   {
-    Task<ConsolidadoResponse> GetConsolidado(GetConsolidadoRequest request);
+    Task<ConsolidadoResponse> GetConsolidado(GetConsolidadoRequest request, string token);
   }
 }

@@ -4,6 +4,6 @@ namespace Application.Interfaces
 {
   public interface IProxyFluxoConsolidado
   {
-    Task<ConsolidadoResponse> GetExtratoFluxoCaixaAsync(string recurso, string parametros);
+    Task<ConsolidadoResponse> GetExtratoFluxoCaixaAsync(string recurso, string parametros, string token);
   }
 }
