@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "e71a64a0-5530-4acb-9916-bb3beb0f6fd2",
+		"name": "VS Carrefour consolidado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38068534"
+	},
+	"item": [
+		{
+			"name": "GetConsolidado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": []
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false,
+				"disableCookies": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSIsImtpZCI6IjlHbW55RlBraGMzaE91UjIybXZTdmduTG83WSJ9.eyJhdWQiOiJhcGk6Ly84MzI4ODVhYS00ODJlLTQ1MGUtOWM0MC0wMDk2MTJiYjNkNDkiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC82OWNlYmJmMC1kZDMyLTRmNTAtYWQ1NS1jMDYwOTk4YzJhOWQvIiwiaWF0IjoxNjk3MzcxODYyLCJuYmYiOjE2OTczNzE4NjIsImV4cCI6MTY5NzM3NzM0NSwiYWNyIjoiMSIsImFpbyI6IkFaUUFhLzhVQUFBQTJ4WFlESDhlTHdTOHI2VHpQRG9SL1NZc0JFYjJzV1VVbWswV2xGUGx5SU1OaFZTR2VQbEV5MDIwb2N2eEJvZUJOMjJWeWNUVnlGdDliUnZTcExLblF5TjNBUElqcE1rdk1LVFdQMXJIb1NINDd4S3dzc0FDREcwSnd1QXJZK3JFWjJmWW5qR2lKS0JXbkRwcGxPdEgvK3JjRG5NamdUQzZHWnIzam1GNWxDRElzY2ltMVc5Q2xJd0htNmtzcnhZUyIsImFtciI6WyJwd2QiLCJtZmEiXSwiYXBwaWQiOiJjZjRmZGU5Mi02NTc0LTQ2NWMtOGE4ZC02MWRjOTQ5ZmQxMWEiLCJhcHBpZGFjciI6IjEiLCJlbWFpbCI6ImRhdmluZXRAbGl2ZS5jb20iLCJmYW1pbHlfbmFtZSI6IkxpbWEgQWx2ZXMiLCJnaXZlbl9uYW1lIjoiRGF2aSIsImlkcCI6ImxpdmUuY29tIiwiaXBhZGRyIjoiMTc5LjI1MS42NC4xNjMiLCJuYW1lIjoiRGF2aSBMaW1hIEFsdmVzIiwib2lkIjoiM2JhY2Q0OWMtNDQ0Mi00Mjc3LThhNzktYjY3YTMyODcyZDQ4IiwicmgiOiIwLkFROEE4THZPYVRMZFVFLXRWY0JnbVl3cW5hcUZLSU11U0E1Rm5FQUFsaEs3UFVrUEFHSS4iLCJzY3AiOiJhY2Nlc3MucmVhZCIsInN1YiI6Im8wci02a2xweGRleVFXNGw3LUtUSHRIQV9rMFhodmNFLTlGZlJ1YlBsSTAiLCJ0aWQiOiI2OWNlYmJmMC1kZDMyLTRmNTAtYWQ1NS1jMDYwOTk4YzJhOWQiLCJ1bmlxdWVfbmFtZSI6ImxpdmUuY29tI2RhdmluZXRAbGl2ZS5jb20iLCJ1dGkiOiJEQUt2UW1ILTVFR2JxMV95eWRvUUFRIiwidmVyIjoiMS4wIn0.FH4_gml85au4Gse9XLsK8Kr76SEpr42mEP6WsjC57iw4jQZkB0Qo4kZqYPKSwOM2upj9SMx8W_RAMtp1QGhyPgL7wYYvkPQD_Vy8WOoyz90EDcQoE6OXy7a41E7mXjY-euF8U6TwbYSFkMk9lC3cyVQWNj-gEogVleWVRtYZpJyb5qjohapcKtrDRsBk5E1GS_rgNo3k-uLi6HSfmTbi4-hRBNqsm8ox_k3eLYMF211TIm9OHgTZYrLpPXM7VrZ1m8qSXFFU9g-MBYC8Qlj7YgsqVmRqX97a-mMPEVMe8Tw0nfQZkpDaJB1DYxKgMV-WpIbwoxX8hlgSDfEdjOS4vw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7022/FluxoCaixa/GetSaldo?AccountId=bad306d6-e5c3-4287-35fe-08db915ba4b5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7022",
+					"path": [
+						"FluxoCaixa",
+						"GetSaldo"
+					],
+					"query": [
+						{
+							"key": "AccountId",
+							"value": "bad306d6-e5c3-4287-35fe-08db915ba4b5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
