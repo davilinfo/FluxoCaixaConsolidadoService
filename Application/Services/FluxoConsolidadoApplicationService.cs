@@ -18,7 +18,7 @@ namespace Application.Services
       _proxyFluxoConsolidado = proxyFluxoConsolidado;
       _repositoryExtractConsolidated = repositoryExtractConsolidated;
     }
-    public async Task<ConsolidadoResponse> GetConsolidado(GetConsolidadoRequest request)
+    public async Task<ConsolidadoResponse> GetConsolidado(GetConsolidadoRequest request, string token)
     {
       try
       {
@@ -29,8 +29,8 @@ namespace Application.Services
         }
 
         var extract = _repositoryExtractConsolidated.All().OrderByDescending(c=>c.Date).FirstOrDefault(c => c.AccountId == Guid.Parse(request.AccountId) && c.Date.Date <= date);
-        if (extract == null) {
-          var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("FluxoCaixa", $"GetExtratoC?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}");
+        if (extract != null) {
+          var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("FluxoCaixa", $"GetExtrato?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}", token);
 
           return result;
         }
@@ -43,7 +43,7 @@ namespace Application.Services
         if (_tentativasRetry > 0)
         {
           _tentativasRetry--;
-          return await GetConsolidado(request);
+          return await GetConsolidado(request, token);
         }
 
         throw e;

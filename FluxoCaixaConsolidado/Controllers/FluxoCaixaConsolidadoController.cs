@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace FluxoCaixaConsolidado.Controllers
 {
   /// <summary>
-  /// Classe responsável por gerar e armazenar consolidado de fluxo de conta
+  /// Classe responsï¿½vel por gerar e armazenar consolidado de fluxo de conta
   /// </summary>
   [ApiController]
   [Route("[controller]")]
@@ -29,7 +29,7 @@ namespace FluxoCaixaConsolidado.Controllers
     }
 
     /// <summary>
-    /// Para retornar o extrato diário informe o identificador da conta, o dia, mês e ano no formato ddmmaaaa
+    /// Para retornar o extrato diï¿½rio informe o identificador da conta, o dia, mï¿½s e ano no formato ddmmaaaa
     /// </summary>
     /// <param name="request">Account id, email e dia</param>
     /// <returns></returns>
@@ -42,19 +42,20 @@ namespace FluxoCaixaConsolidado.Controllers
         Guid id;
         if (!Guid.TryParse(request.AccountId, out id))
         {
-          ModelState.AddModelError("Guid", "Identificador em formato inválido => guid");
+          ModelState.AddModelError("Guid", "Identificador em formato invï¿½lido => guid");
         }
         DateTime date;
         if (!DateTime.TryParse($"{int.Parse(request.DiaMesAno.Substring(4))}/{int.Parse(request.DiaMesAno.Substring(2, 2))}/{int.Parse(request.DiaMesAno.Substring(0, 2))}", out date))
         {
-          ModelState.AddModelError("diamesano", "Data inválida");
+          ModelState.AddModelError("diamesano", "Data invï¿½lida");
         }
         if (ModelState.IsValid)
         {
-          var result = await _fluxoConsolidadoApplicationService.GetConsolidado(request);
+          var token = HttpContext.Request.Headers.Authorization.FirstOrDefault();
+          var result = await _fluxoConsolidadoApplicationService.GetConsolidado(request, token);
           if (result.IdAccount == null)
           {
-            return NotFound("Conta ainda sem movimentação");
+            return NotFound("Conta ainda sem movimentaï¿½ï¿½o");
           }
           return Ok(result);
         }
@@ -62,7 +63,7 @@ namespace FluxoCaixaConsolidado.Controllers
         {
           foreach (var erro in item.Errors)
           {
-            _logger.LogError($"Date: {DateTime.UtcNow}, Error: requisição inválida {erro.ErrorMessage}");
+            _logger.LogError($"Date: {DateTime.UtcNow}, Error: requisiï¿½ï¿½o invï¿½lida {erro.ErrorMessage}");
           }
         }
         return BadRequest(ModelState);
@@ -70,7 +71,7 @@ namespace FluxoCaixaConsolidado.Controllers
       catch (Exception e)
       {
         _logger.LogError($"{e.Message}", e);
-        var internalServerError = new JsonResult($"Aconteceu o seguinte erro: Não foi possível retornar consolidado! {e.Message}");
+        var internalServerError = new JsonResult($"Aconteceu o seguinte erro: Nï¿½o foi possï¿½vel retornar consolidado! {e.Message}");
         internalServerError.StatusCode = 500;
         return internalServerError;
       }
