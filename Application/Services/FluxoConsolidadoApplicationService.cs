@@ -28,9 +28,9 @@ namespace Application.Services
           throw new Exception("Data inválida");
         }
 
-        var extract = _repositoryExtractConsolidated.All().FirstOrDefault(c => c.AccountId == Guid.Parse(request.AccountId) && c.Date.Date == date);
-        if (extract == null || extract.Date.Date == DateTime.Now.Date) {
-          var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("FluxoCaixa", $"GetExtrato?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}");
+        var extract = _repositoryExtractConsolidated.All().OrderByDescending(c=>c.Date).FirstOrDefault(c => c.AccountId == Guid.Parse(request.AccountId) && c.Date.Date <= date);
+        if (extract == null) {
+          var result = await _proxyFluxoConsolidado.GetExtratoFluxoCaixaAsync("FluxoCaixa", $"GetExtratoC?AccountId={request.AccountId}&DiaMesAno={request.DiaMesAno}");
 
           return result;
         }
