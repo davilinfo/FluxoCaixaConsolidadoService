@@ -31,7 +31,7 @@ alterar AMQP hostname para host.docker.internal
 
 Para publicar versão da aplicação faça na pasta da solução: Dotnet publish -c Debug
 
-Gerar imagem em docker: docker build -f "D:\RestfulApi\FluxoCaixaConsolidado\FluxoCaixaConsolidado\Dockerfile" --force-rm -t consolidado "D:\RestfulApi\FluxoCaixaConsolidado"
+Gerar imagem em docker (na pasta da solução faça): docker build -f ".\FluxoCaixaConsolidado\Dockerfile" --force-rm -t consolidado ".\"
 
 Criar container a partir de imagem: docker run -dt -e "ASPNETCORE_ENVIRONMENT=Development" -e "ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true" -p47155:80 --name consolidado_development consolidado:latest --network host
 
