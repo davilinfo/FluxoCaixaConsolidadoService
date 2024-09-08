@@ -1,13 +1,17 @@
 using Application.Interfaces;
 using Application.Model.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using System.Text.Json;
 
 namespace FluxoCaixaConsolidado.Controllers
 {
   /// <summary>
-  /// Classe respons�vel por gerar e armazenar consolidado de fluxo de conta
+  /// Classe responsável por gerar e armazenar consolidado de fluxo de conta
   /// </summary>
+  [Authorize]
+  [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
   [ApiController]
   [Route("[controller]")]
   [Produces("application/json")]
@@ -29,7 +33,7 @@ namespace FluxoCaixaConsolidado.Controllers
     }
 
     /// <summary>
-    /// Para retornar o extrato di�rio informe o identificador da conta, o dia, m�s e ano no formato ddmmaaaa
+    /// Para retornar o extrato diário informe o identificador da conta, o dia, mês e ano no formato ddmmaaaa
     /// </summary>
     /// <param name="request">Account id, email e dia</param>
     /// <returns></returns>
@@ -42,12 +46,12 @@ namespace FluxoCaixaConsolidado.Controllers
         Guid id;
         if (!Guid.TryParse(request.AccountId, out id))
         {
-          ModelState.AddModelError("Guid", "Identificador em formato inv�lido => guid");
+          ModelState.AddModelError("Guid", "Identificador em formato inválido => guid");
         }
         DateTime date;
         if (!DateTime.TryParse($"{int.Parse(request.DiaMesAno.Substring(4))}/{int.Parse(request.DiaMesAno.Substring(2, 2))}/{int.Parse(request.DiaMesAno.Substring(0, 2))}", out date))
         {
-          ModelState.AddModelError("diamesano", "Data inv�lida");
+          ModelState.AddModelError("diamesano", "Data inválida");
         }
         if (ModelState.IsValid)
         {
@@ -55,7 +59,7 @@ namespace FluxoCaixaConsolidado.Controllers
           var result = await _fluxoConsolidadoApplicationService.GetConsolidado(request, token);
           if (result.IdAccount == null)
           {
-            return NotFound("Conta ainda sem movimenta��o");
+            return NotFound("Conta ainda sem movimentação");
           }
           return Ok(result);
         }
@@ -63,7 +67,7 @@ namespace FluxoCaixaConsolidado.Controllers
         {
           foreach (var erro in item.Errors)
           {
-            _logger.LogError($"Date: {DateTime.UtcNow}, Error: requisi��o inv�lida {erro.ErrorMessage}");
+            _logger.LogError($"Date: {DateTime.UtcNow}, Error: requisição inválida {erro.ErrorMessage}");
           }
         }
         return BadRequest(ModelState);
@@ -71,7 +75,7 @@ namespace FluxoCaixaConsolidado.Controllers
       catch (Exception e)
       {
         _logger.LogError($"{e.Message}", e);
-        var internalServerError = new JsonResult($"Aconteceu o seguinte erro: N�o foi poss�vel retornar consolidado! {e.Message}");
+        var internalServerError = new JsonResult($"Aconteceu o seguinte erro: Não foi possível retornar consolidado! {e.Message}");
         internalServerError.StatusCode = 500;
         return internalServerError;
       }
