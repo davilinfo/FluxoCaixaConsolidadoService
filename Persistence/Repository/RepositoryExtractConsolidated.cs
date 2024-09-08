@@ -41,8 +41,10 @@ namespace Persistence.Repository
     public async Task<ExtractConsolidated> GetById(Guid id)
     {
       var result = await _context.Extracts.FirstOrDefaultAsync(t => t.Id == id);
-      return result;
-    }
+#pragma warning disable CS8603 // Possible null reference return.
+            return result;
+#pragma warning restore CS8603 // Possible null reference return.
+        }
 
     public async Task<int> Update(ExtractConsolidated entidade)
     {
