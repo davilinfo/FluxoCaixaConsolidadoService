@@ -5,6 +5,7 @@ using Domain.Contract;
 using Microsoft.OpenApi.Models;
 using Persistence.Context;
 using Persistence.Repository;
+using Persistence.Repository.Raven;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSingleton<IRepositoryExtractConsolidated, RepositoryExtractConsolidated>();
+builder.Services.AddSingleton<IRavenRepositoryExtractConsolidated, RavenRepositoryExtractConsolidado>();
 
 builder.Services.AddScoped<IFluxoConsolidadoApplicationService, FluxoConsolidadoApplicationService>();
 builder.Services.AddScoped<IProxyFluxoConsolidado, ProxyFluxoConsolidado>();
