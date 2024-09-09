@@ -5,7 +5,7 @@ Projeto desenvolvido com .NET 7.0 Instruções de como utilizar web api estão d
 
 Microserviço: independente para time, permite escalar horizontalmente e verticalmente
 
-## CQRS (Não inteiramente já que não existe uma outra base de dados para read na solução): Consultas e persistência em database realizada em repositórios (Persistência), contratos repositórios e entidades em Domínio, Serviços contém regras de negócio e invocação de contratos, controller invocam serviços e fazem validação
+## CQRS: Consultas e persistência em database realizada em repositórios (Persistência), contratos repositórios e entidades em Domínio, Serviços contém regras de negócio e invocação de contratos, controller invocam serviços e fazem validação
 ## Proxy consulta a serviço externo
 ## Saga pattern persistência consolidado em outra base de dados
 
