@@ -7,5 +7,6 @@ namespace Domain.Contract
   {
     List<RavenExtractConsolidated> GetByDate(DateTime? date, int numberOfRows=50, int page=0);
     IRavenQueryable<RavenExtractConsolidated> AllRaven();
+    bool IsRavenDbSet();
   }
 }

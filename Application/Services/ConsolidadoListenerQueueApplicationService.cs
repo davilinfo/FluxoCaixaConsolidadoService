@@ -101,17 +101,20 @@ namespace Application.Services
 
     private async Task PersistRavenFromQueue(ExtractConsolidated entity)
     {                  
-      var item = await _ravenRepositoryExtractConsolidated.GetById(entity.Id);
-      if (item == null){
-        item = new RavenExtractConsolidated{
-          AccountId = entity.AccountId,
-          Date = entity.Date,
-          Extract = entity.Extract,
-          ExtractConsolidatedId = entity.Id
-        };
-        await _ravenRepositoryExtractConsolidated.Add(item);
-      }else{
-        await PersistUpdateRavenFromQueue(entity);
+      if (_ravenRepositoryExtractConsolidated.IsRavenDbSet())
+      {
+        var item = await _ravenRepositoryExtractConsolidated.GetById(entity.Id);
+        if (item == null){
+          item = new RavenExtractConsolidated{
+            AccountId = entity.AccountId,
+            Date = entity.Date,
+            Extract = entity.Extract,
+            ExtractConsolidatedId = entity.Id
+          };
+          await _ravenRepositoryExtractConsolidated.Add(item);
+        }else{
+          await PersistUpdateRavenFromQueue(entity);
+        }
       }
     }
     private async Task PersistUpdateRavenFromQueue(ExtractConsolidated entity)
@@ -127,16 +130,18 @@ namespace Application.Services
 
     private async Task SyncRavenFromSQL(){
       try{
-        var sqlCount = _repositoryExtractConsolidated.All()?.Count();
-        var ravenCount = _ravenRepositoryExtractConsolidated.AllRaven().Count();
-        if (sqlCount != ravenCount){          
-          var items = _repositoryExtractConsolidated.All()?.ToArray();
-          if (items != null)
-          {
-            foreach(var extract in items){
-              await PersistRavenFromQueue(extract);
-            }
-          }          
+        if (_ravenRepositoryExtractConsolidated.IsRavenDbSet()){
+          var sqlCount = _repositoryExtractConsolidated.All()?.Count();
+          var ravenCount = _ravenRepositoryExtractConsolidated.AllRaven().Count();
+          if (sqlCount != ravenCount){          
+            var items = _repositoryExtractConsolidated.All()?.ToArray();
+            if (items != null)
+            {
+              foreach(var extract in items){
+                await PersistRavenFromQueue(extract);
+              }
+            }          
+          }
         }
       }catch(Exception e){
         _logger.LogError("Listener service: Exception {0}", e);
